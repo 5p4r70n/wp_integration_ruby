@@ -1,4 +1,5 @@
 require 'net/http'
+require 'json'
 class ArticlesController < ApplicationController
   def index
     print "ArticlesController#index\n\n"
@@ -9,8 +10,9 @@ class ArticlesController < ApplicationController
   def another
     uri = URI('https://graph.facebook.com/v19.0/321326354386720/messages')
     params = {
-      :access_token => 'EAALbFDkqMBQBO1geZBHGthGZBpgR3hURvP2CcDhVGzvkkvOJhLpnmvjwGXjIHFq18ZBrw44qZAgXxb5LNnbr2xly1g37AumIbZAg5yi5wUkkUzAEeqeQlYBFifyWqRqrZCaFZBPqRAgqgWe1uKoKE0iq7lUG3q2kY4VPiWEMnUloTAiS3dQetRMUgyfEFZBmg7M1zMF0QDfZBOrVLZBLw9bctls3DM9xU2TU4ZD',
+      :access_token => 'EAALbFDkqMBQBOyZAJuF6iCynTeyCSWAGit1PWZCm4rGvYckPbLYbiJlYkl9mot378ZAJwwEXo7XZCTQIyZAZAVJZABaNHhh4fY0j7ZCYinJ6rs9bUGDRQrIw9fCEPIoiUxvW5fTYyVKOLwXKxny0oZAubZA7R9tJ5wU6dKMUxCZBjrHZBXcR3TjhCKHydZCcKOcxnIxXKiej8k80ByavJALydatB6Ke8MjgVleREZD',
     }
+    
     uri.query = URI.encode_www_form(params)
 
     req = Net::HTTP::Post.new(uri)
@@ -18,7 +20,6 @@ class ArticlesController < ApplicationController
     req['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0'
     req['Accept'] = '*/*'
     req['Accept-Language'] = 'en-GB'
-    # req['Accept-Encoding'] = 'gzip, deflate, br'
     req['Referer'] = 'https://developers.facebook.com/'
     req['Origin'] = 'https://developers.facebook.com'
     req['Connection'] = 'keep-alive'
@@ -34,10 +35,9 @@ class ArticlesController < ApplicationController
       'method' => 'post',
       'pretty' => '0',
       'suppress_http_code' => '1',
-      'text' => 'Ahoy',
+      'text' => {'body' : 'Ahoyyyyyy'},
       'to' => '919809864275',
       'type' => 'text',
-      'xref' => 'f13861e21e5ce245f'
     })
 
     req_options = {
@@ -46,7 +46,14 @@ class ArticlesController < ApplicationController
     res = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
       http.request(req)
     end
-   
+    print(res.body)
     render json: { "sdfgdsgdf": "sgdfgdfgdfg" }
   end
+
+  def hookweb
+    print ('webhook')
+
+    render json: {"Ahoyy" : "sdsfdgdf"}
+  end
+
 end
