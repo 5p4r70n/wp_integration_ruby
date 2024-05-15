@@ -29,6 +29,9 @@ Rails.application.routes.draw do
       scope module: 'message' do
         resources :message_action, only: [:index]
       end
+      scope module: 'wbhk' do
+        resources :webhook, only: [:index]
+      end
     end
   end
 end
